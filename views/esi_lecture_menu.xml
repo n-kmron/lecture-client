@@ -12,7 +12,7 @@
 
 
     <!-- Ajoute un menu DANS la navbar de l'application interne à l'app -->
-    <menuitem id="lecture_menu" name="Lecture" parent="menu_esi_lecture" />
+    <menuitem id="lecture_menu" name="Lecture" parent="menu_esi_lecture" sequence="1"/>
 
     <!-- Ajoute un sous-menu dans la navbar de l'application -->
     <menuitem id="book_menu" name="Books" parent="lecture_menu" action="lecture_list_action" />

@@ -15,7 +15,7 @@
                         </group>
                         <group name="group_right">
                             <field name="date_created"/>
-                            <field name="cover_image"/>
+                            <field name="cover_image" widget='image' class="oe_avatar"/>
                         </group>
                     </group>
                     <group name="group_bottom">
