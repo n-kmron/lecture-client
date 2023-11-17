@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<odoo>
+    <!-- Vue formulaire-->
+    <record id="view_form_esi_book" model="ir.ui.view">
+        <field name="name">Esi Book Form</field>
+        <field name="model">esi.book</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="do_clear_done" type="object" string="Clear Done"/>
+                </header>
+                <sheet>
+                    <group name="group_top">
+                        <group name="group_left">
+                            <field name="name"/>
+                            <field name="authors" widget="many2many_tags"/>
+                            <field name="pages"/>
+                        </group>
+                        <group name="group_right">
+                            <field name="date_created"/>
+                            <field name="cover_image"/>
+                        </group>
+                    </group>
+                    <group name="group_bottom">
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vue liste-->
+    <record id="view_tree_esi_book" model="ir.ui.view">
+        <field name="name">Esi Book Tree</field>
+        <field name="model">esi.book</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="date_created"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Search view-->
+    <record id="view_filter_esi_book" model="ir.ui.view">
+        <field name="name">Esi Book Filter</field>
+        <field name="model">esi.book</field>
+        <field name="arch" type="xml">
+            <search>
+                <!-- <filter string="Without Authors" name="filter_without_authors" domain="[('authors','=',False)]"/> -->
+                <filter string="Without Authors" name="filter_without_authors" domain="[('authors','=',[(6, 0, [])])]"/>
+            </search>
+        </field>
+    </record>
+</odoo>
+
