@@ -6,9 +6,6 @@
         <field name="model">esi.book</field>
         <field name="arch" type="xml">
             <form>
-                <header>
-                    <button name="do_clear_done" type="object" string="Clear Done"/>
-                </header>
                 <sheet>
                     <group name="group_top">
                         <group name="group_left">
