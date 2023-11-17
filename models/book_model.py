@@ -30,7 +30,7 @@ class Book(models.Model):
                 raise models.ValidationError('The date of publication must be less than today')
 
     @api.constrains('pages')
-    def _check_name_size(self):
+    def _check_pages_size(self):
         for book in self:
-            if len(book.pages) <= 0:
+            if book.pages <= 0:
                 raise models.ValidationError('The number of pages must be greater than 0')

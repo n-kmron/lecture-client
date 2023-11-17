@@ -45,7 +45,7 @@
         <field name="arch" type="xml">
             <search>
                 <!-- <filter string="Without Authors" name="filter_without_authors" domain="[('authors','=',False)]"/> -->
-                <filter string="Without Authors" name="filter_without_authors" domain="[('authors','=',[(6, 0, [])])]"/>
+                <!-- <filter string="Without Authors" name="filter_without_authors" domain="[('authors','=',[(6, 0, [])])]"/> -->
             </search>
         </field>
     </record>
