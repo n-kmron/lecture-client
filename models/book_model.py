@@ -20,7 +20,7 @@ class Book(models.Model):
 
     authors = fields.Many2many(
         comodel_name='res.partner',
-        string='Team',
+        string='Authors',
     )
 
     @api.constrains('date_created')
