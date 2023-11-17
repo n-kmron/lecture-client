@@ -12,10 +12,7 @@ class Book(models.Model):
     description = fields.Text('Description', help="Resume of the book ?")
 
     cover_image = fields.Binary(help="Book Cover")
-
-
     date_created = fields.Date('Date de publication', help="Date of publication ?")
-
     pages = fields.Integer('Nombres de pages',help="Number of pages ?")
 
     authors = fields.Many2many(

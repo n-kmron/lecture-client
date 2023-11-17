@@ -44,6 +44,7 @@
         <field name="model">esi.book</field>
         <field name="arch" type="xml">
             <search>
+                <!-- le filtre s'applique lorsque l'instance Book a son attribut 'authors' vide (liste d'authors)-->
                 <filter string="Without Authors" name="filter_without_authors" domain="[('authors','=',False)]"/>
             </search>
         </field>
