@@ -40,5 +40,5 @@ This project comprises two applications:
 2. Book rating application.
 
 ## Authors
-* Mamoun El Benmassoud
-* Cameron Noupoue
+> Mamoun El Benmassoud <br>
+> Cameron Noupoue
