@@ -6,7 +6,7 @@ import logging
 
 _logger = logging.getLogger(__name__)
 class Book(models.Model):
-    _name = 'esi_book'
+    _name = 'esi.book'
 
     name = fields.Char('Titre', help="Name of the book ?", unique=True)
     description = fields.Text('Description', help="Resume of the book ?")
