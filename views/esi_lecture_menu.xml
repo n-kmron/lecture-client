@@ -1,21 +1,21 @@
 <?xml version="1.0"?>
 <odoo>
     <!-- Action to open Esi Lecture list -->
-    <record model="ir.actions.act_window" id="action_esi_lecture">
+    <record model="ir.actions.act_window" id="lecture_list_action">
         <field name="name">Esi Lecture</field>
         <field name="res_model">esi.book</field>
         <field name="view_mode">tree,form</field>
     </record>
 
     <!-- Ajoute un menu en plus dans le menu "carré en haut à gauche -->
-    <menuitem id="menu_esi_lecture" name="Esi Lecture"/>
+    <menuitem id="menu_esi_lecture" name="Esi Lecture" sequence="1"/>
 
 
     <!-- Ajoute un menu DANS la navbar de l'application interne à l'app -->
-    <menuitem id="esi_lecture_menu" name="Esi Lecture" parent="menu_esi_lecture" />
+    <menuitem id="lecture_menu" name="Lecture" parent="menu_esi_lecture" />
 
-    <!-- Ajoute un sous-menu dans la navbar de l'application (child de menu_todo_task) -->
-    <menuitem id="book_menu" name="Books" parent="esi_lecture_menu" action="action_esi_lecture" />
+    <!-- Ajoute un sous-menu dans la navbar de l'application -->
+    <menuitem id="book_menu" name="Books" parent="lecture_menu" action="lecture_list_action" />
 
      <!-- Action to open res.partner list -  affichage de la liste des res.partner (view many2many) -->
      <record model="ir.actions.act_window" id="authors_list_action">
