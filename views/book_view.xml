@@ -18,9 +18,11 @@
                             <field name="cover_image" widget='image' class="oe_avatar"/>
                         </group>
                     </group>
-                    <group name="group_bottom">
-                        <field name="description"/>
-                    </group>
+                    <notebook>
+                        <page string="Description" name="desc_page">
+                            <field name="description" widget="html"/>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>

@@ -9,7 +9,7 @@ class Book(models.Model):
     _name = 'esi.book'
 
     name = fields.Char('Titre', help="Name of the book ?", unique=True)
-    description = fields.Text('Description', help="Resume of the book ?")
+    description = fields.Html('Description', help="Resume of the book ?")
 
     cover_image = fields.Binary(help="Book Cover")
     date_created = fields.Date('Date de publication', help="Date of publication ?")
