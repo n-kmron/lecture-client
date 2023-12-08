@@ -19,10 +19,9 @@ The goal is to develop a book sales module with the following functionalities:
 
 ### Use of Web Service
 
-To familiarize yourself with XML-RPC, write a Python script that:
-- Asks the user for their login and password (or API key).
-- Connects to your Odoo instance via XML-RPC.
-- As long as the user wishes, searches for a book based on its name (title). Details of the implementation of these calls are available in the [documentation](https://www.odoo.com/documentation/14.0/fr/developer/api/external_api.html).
+A RPC and python script is available at `api/script.py` to search books.
+
+Details of the implementation of these calls are available in the [documentation](https://www.odoo.com/documentation/14.0/fr/developer/api/external_api.html).
 
 ### Integration with Existing Modules
 
