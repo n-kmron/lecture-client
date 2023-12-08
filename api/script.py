@@ -48,11 +48,6 @@ except Exception as e:
 # Référence à model.Models
 models = xmlrpc.client.ServerProxy('{}/xmlrpc/2/object'.format(url))
 
-# Vérification des droits d’accès
-hasRight = models.execute_kw(db, uid, password,
-                             'esi.book', 'check_access_rights',
-                             ['read'], {'raise_exception': False})
-
 while True:
     # Vérification des droits d’accès
     has_right = models.execute_kw(db, uid, password,
