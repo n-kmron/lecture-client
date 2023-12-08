@@ -90,5 +90,19 @@
             <field name="pages">838</field>
             <field name="authors" eval="[(4,ref('author_02'))]"/>
         </record>
+
+        <record id="product_template_coffret_potter" model="product.template">
+            <field name="name">Coffret Potter</field>
+            <field name="book_ids" eval="[(6, 0, [ref('esi_book_01'), ref('esi_book_02'), ref('esi_book_03')])]"/>
+            <field name="available_in_pos">True</field>
+            <field name="image_1920" type="base64" file="esi_lecture/static/img/harryPotterCollection.jpg"/>
+        </record>
+
+        <record id="product_template_coffret_dune" model="product.template">
+            <field name="name">Coffret Dune</field>
+            <field name="book_ids" eval="[(6, 0, [ref('esi_book_04')])]"/>
+            <field name="available_in_pos">True</field>
+            <field name="image_1920" type="base64" file="esi_lecture/static/img/dune1.jpg"/>
+        </record>
     </data>
 </odoo>
