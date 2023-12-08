@@ -10,6 +10,9 @@
             <field name="is_author">True</field>
         </record>
 
+        <record model="res.partner" id="provider_01">
+            <field name="name">Presses Universitaires de Bruxelles</field>
+        </record>
 
         <record model="esi.book" id="esi_book_01">
             <field name="name">Harry Potter, I : Harry Potter à l'école des sorciers</field>
