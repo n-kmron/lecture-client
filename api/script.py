@@ -1,4 +1,5 @@
 import xmlrpc.client
+import sys
 
 def search_book_by_name(models, db, uid, password):
     # Demander à l'utilisateur le nom du livre à rechercher
@@ -20,6 +21,7 @@ def search_book_by_name(models, db, uid, password):
     else:
         print("Aucun livre trouvé avec le nom '{book_name}'.")
 
+
 # Paramètres de connexion
 url = "http://localhost:8069"
 db = "dev01"
@@ -28,12 +30,20 @@ username = input("Username: ")
 password = input("Password: ")
 
 # Récupération de la version d’ODOO installée
-common = xmlrpc.client.ServerProxy(
-    '{}/xmlrpc/2/common'.format(url))
-print("Version : ", common.version())
+try:
+    common = xmlrpc.client.ServerProxy(
+        '{}/xmlrpc/2/common'.format(url))
+    print("Version : ", common.version())
+except Exception as e:
+    print(f"Erreur lors de la récupération de la version d'ODOO : {e}")
+    sys.exit(1)
 
 # Connexion de l’utilisateur
-uid = common.authenticate(db, username, password, {})
+try:
+    uid = common.authenticate(db, username, password, {})
+except Exception as e:
+    print(f"Erreur lors de la connexion de l'utilisateur : {e}")
+    sys.exit(1)
 
 # Référence à model.Models
 models = xmlrpc.client.ServerProxy('{}/xmlrpc/2/object'.format(url))
@@ -43,28 +53,19 @@ hasRight = models.execute_kw(db, uid, password,
                              'esi.book', 'check_access_rights',
                              ['read'], {'raise_exception': False})
 
-books = models.execute_kw(db, uid, password,
-                          'esi.book', 'search_read', [[]])
+while True:
+    # Vérification des droits d’accès
+    has_right = models.execute_kw(db, uid, password,
+                                  'esi.book', 'check_access_rights',
+                                  ['read'], {'raise_exception': False})
+    print("Droit de lecture sur le esi.book : ", has_right)
 
-print("Nombre de livres actuellement : ", len(books))
+    # Recherche d'un livre par nom
+    search_book_by_name(models, db, uid, password)
 
-id_created = models.execute_kw(db, uid, password,
-                               'esi.book', 'create',
-                               [{'name': 'Le livre API', 'description': "Test appel RPC pour un livre"}])
-print("Nouveau livre créé via l'API avec l'id : ", id_created)
+    # Demander à l'utilisateur s'il souhaite effectuer une nouvelle recherche
+    user_input = input("Voulez-vous effectuer une autre recherche ? (Oui/Non): ").lower()
+    if user_input != 'oui':
+        break
 
-books = models.execute_kw(db, uid, password,
-                          'esi.book', 'search_read', [[]])
-
-for book in books:
-    print(" − ID : ", book.get("id"))
-    print(" − Nom : ", book.get("name"))
-    print(" − Pages : ", book.get("pages"))
-    print(" − Date : ", book.get("date_created"))
-
-models.execute_kw(db, uid, password,
-                  'esi.book', 'unlink', [[id_created]])
-print("Livre supprimé via l'API avec l'id : ", id_created)
-
-
-#https://www.odoo.com/documentation/14.0/fr/developer/reference/external_api.html
+# https://www.odoo.com/documentation/14.0/fr/developer/reference/external_api.html
