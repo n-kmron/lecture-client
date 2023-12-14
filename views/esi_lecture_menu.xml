@@ -25,6 +25,23 @@
         <field name="context" eval="{'search_default_filter_authors': 1}"/>
     </record>
 
+
+    <menuitem id="replenish_menu" name="Réapprovisionner" parent="menu_esi_lecture" action="stock_picking_type_action"/>
+
+    <record id="stock_picking_type_action" model="ir.actions.act_window">
+        <field name="name">Replenish</field>
+        <field name="res_model">stock.picking.type</field>
+        <field name="view_mode">kanban,form</field>
+    </record>
+
+    <menuitem id="sell_menu" name="Ventes" parent="menu_esi_lecture" action="action_pos_config_kanban"/>
+
+    <record id="action_pos_config_kanban" model="ir.actions.act_window">
+        <field name="name">Sell</field>
+        <field name="res_model">pos.config</field>
+        <field name="view_mode">kanban,form</field>
+    </record>
+
     <!-- Ajoute un menu DANS la navbar de l'application interne à l'app -->
     <menuitem id="configuration_menu" name="Configuration" parent="menu_esi_lecture"/>
 
