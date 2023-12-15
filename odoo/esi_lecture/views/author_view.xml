@@ -1,0 +1,29 @@
+<odoo>
+    <record model="ir.ui.view" id="partner_author_form_view">
+        <field name="name">partner.is_author</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Books">
+                    <group>
+                        <field name="is_author"/>
+                        <field name="book_ids"/>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+    <!-- Partners Search view - création d'un affichage pour la vue de recherche et GESTION DES FILTRES-->
+    <record id="view_filter_authors" model="ir.ui.view">
+        <field name="name">Authors Filter</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="user_id"/>
+                <filter string="Authors" name="filter_authors" domain="[('is_author','=',True)]"/>
+            </search>
+        </field>
+    </record>
+</odoo>
