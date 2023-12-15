@@ -94,7 +94,7 @@
             <field name="authors" eval="[(4,ref('author_02'))]"/>
         </record>
 
-        <record id="product_template_coffret_potter" model="product.template">
+        <record id="product_template_coffret_potter" model="product.product">
             <field name="name">Coffret Potter</field>
             <field name="type">product</field>
             <field name="categ_id"
@@ -105,7 +105,7 @@
             <field name="image_1920" type="base64" file="esi_lecture/static/img/harryPotterCollection.jpg"/>
         </record>
 
-        <record id="product_template_coffret_dune" model="product.template">
+        <record id="product_template_coffret_dune" model="product.product">
             <field name="name">Coffret Dune</field>
             <field name="type">product</field>
             <field name="categ_id"
@@ -127,22 +127,31 @@
         <record id="stock_inventory_line_coffret_potter" model="stock.inventory.line">
             <field name="product_id" ref="esi_lecture.product_template_coffret_potter"/>
             <field name="product_uom_id" ref="uom.product_uom_unit"/>
-            <field name="inventory_id" ref="stock.stock_inventory_0"/>
+            <field name="inventory_id" ref="inventory_books"/>
             <field name="product_qty">16.0</field>
+            <field name="location_id" model="stock.location" eval="obj().env.ref('stock.warehouse0').lot_stock_id.id"/>
+            <field name="partner_id" ref="provider_01"/>
+        </record>
+
+        <record id="stock_inventory_line_coffret_dune" model="stock.inventory.line">
+            <field name="product_id" ref="esi_lecture.product_template_coffret_dune"/>
+            <field name="product_uom_id" ref="uom.product_uom_unit"/>
+            <field name="inventory_id" ref="inventory_books"/>
+            <field name="product_qty">31.0</field>
             <field name="location_id" model="stock.location" eval="obj().env.ref('stock.warehouse0').lot_stock_id.id"/>
             <field name="partner_id" ref="provider_01"/>
         </record>
 
         <!-- démarrer l'inventaire lorsqu'il est à l'état "brouillon" -->
         <function model="stock.inventory" name="_action_start">
-            <function eval="[[('state','=','draft'),('id', '=', ref('stock.stock_inventory_0'))]]"
+            <function eval="[[('state','=','draft'),('id', '=', ref('inventory_books'))]]"
                       model="stock.inventory"
                       name="search"/>
         </function>
 
         <!-- valider l'inventaire -->
         <function model="stock.inventory" name="action_validate">
-            <function eval="[[('state','=','confirm'),('id', '=', ref('stock.stock_inventory_0'))]]"
+            <function eval="[[('state','=','confirm'),('id', '=', ref('inventory_books'))]]"
                       model="stock.inventory"
                       name="search"/>
         </function>
