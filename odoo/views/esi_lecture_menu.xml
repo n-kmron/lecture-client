@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<odoo>
+    <!-- Action to open Esi Lecture list -->
+    <record model="ir.actions.act_window" id="lecture_list_action">
+        <field name="name">Esi Lecture</field>
+        <field name="res_model">esi.book</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Ajoute un menu en plus dans le menu "carré en haut à gauche -->
+    <menuitem id="menu_esi_lecture" name="Esi Lecture" sequence="1"/>
+
+
+    <!-- Ajoute un menu DANS la navbar de l'application interne à l'app -->
+    <menuitem id="lecture_menu" name="Lecture" parent="menu_esi_lecture" sequence="1"/>
+
+    <!-- Ajoute un sous-menu dans la navbar de l'application -->
+    <menuitem id="book_menu" name="Books" parent="lecture_menu" action="lecture_list_action"/>
+
+    <!-- Action to open res.partner list -  affichage de la liste des res.partner (view many2many) -->
+    <record model="ir.actions.act_window" id="authors_list_action">
+        <field name="name">Authors</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context" eval="{'search_default_filter_authors': 1}"/>
+    </record>
+
+    <record id="action_pos_config_kanban" model="ir.actions.act_window">
+        <field name="name">Sell</field>
+        <field name="res_model">pos.config</field>
+        <field name="view_mode">kanban,form</field>
+    </record>
+
+    <record id="stock_picking_type_action" model="ir.actions.act_window">
+        <field name="name">Replenish</field>
+        <field name="res_model">stock.picking.type</field>
+        <field name="view_mode">kanban,form</field>
+    </record>
+
+    <menuitem id="replenish_menu" name="Réapprovisionner" parent="menu_esi_lecture" action="stock_picking_type_action"/>
+
+    <menuitem id="sell_menu" name="Ventes" parent="menu_esi_lecture" action="action_pos_config_kanban"/>
+
+
+    <!-- Ajoute un menu DANS la navbar de l'application interne à l'app -->
+    <menuitem id="configuration_menu" name="Configuration" parent="menu_esi_lecture"/>
+
+    <!-- Ajoute un sous-menu dans la navbar de l'application (child de configuration_menu) -->
+    <menuitem id="contact_menu" name="Authors" parent="configuration_menu" action="authors_list_action"/>
+
+    <record id="product_template_action" model="ir.actions.act_window">
+        <field name="name">Produits Livres</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context" eval="{'search_default_filter_books_product': 1}"/>
+    </record>
+
+    <menuitem id="menu_product_template"
+              name="Products - Books"
+              parent="configuration_menu"
+              action="product_template_action"
+    />
+</odoo>
+

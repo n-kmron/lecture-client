@@ -1,0 +1,159 @@
+<odoo>
+    <data noupdate="1">
+        <record model="res.partner" id="author_01">
+            <field name="name">J.K. Rowling</field>
+            <field name="is_author">True</field>
+        </record>
+
+        <record model="res.partner" id="author_02">
+            <field name="name">Frank Herbert</field>
+            <field name="is_author">True</field>
+        </record>
+
+        <record model="res.partner" id="provider_01">
+            <field name="name">Presses Universitaires de Bruxelles</field>
+        </record>
+
+        <record model="esi.book" id="esi_book_01">
+            <field name="name">Harry Potter, I : Harry Potter à l'école des sorciers</field>
+            <field name="cover_image" type="base64" file="esi_lecture/static/img/harryPotter1.jpg"/>
+            <field name="description">
+                <![CDATA[
+                <h2>Quatrième de couverture</h2>
+                <br>
+                Harry Potter est un garçon ordinaire.
+                Mais le jour de ses onze ans, son existence bascule :
+                un géant vient le chercher pour l'emmener dans une école de sorciers.
+                Quel mystère entoure donc sa naissance et qui est l'effroyable V...,
+                le mage dont personne n'ose prononcer le nom ? Voler à cheval sur des balais,
+                jeter des sorts, combattre les Trolls : Harry Potter se révèle un sorcier vraiment doué.
+                Quand il décide, avec ses amis, d'explorer les moindres recoins de son école,
+                il va se trouver entraîné dans d'extraordinaires aventures.
+                 ]]>
+            </field>
+            <field name="date_created">2017-10-12</field>
+            <field name="pages">320</field>
+            <field name="authors" eval="[(4,ref('author_01'))]"/>
+        </record>
+
+        <record model="esi.book" id="esi_book_02">
+            <field name="name">Harry Potter et la chambre des secrets</field>
+            <field name="cover_image" type="base64" file="esi_lecture/static/img/harryPotter2.jpg"/>
+            <field name="description">
+                <![CDATA[
+                    <h2>Quatrième de couverture</h2>
+                    <br>
+                    Harry Potter fait une rentrée fracassante en voiture volante à l'école des sorciers.
+                    Cette deuxième année ne s'annonce pas de tout repos...
+                    surtout depuis qu'une étrange malédiction s'est abattue sur les élèves.
+                    Entre les cours de potion magique, les matches de Quidditch et les combats de mauvais sorts,
+                    Harry trouvera-t-il le temps de percer le mystère de la Chambre des Secrets ?
+                    Un livre magique pour sorciers confirmés.
+                ]]>
+            </field>
+            <field name="date_created">2017-10-12</field>
+            <field name="pages">368</field>
+            <field name="authors" eval="[(4,ref('author_01'))]"/>
+        </record>
+
+        <record model="esi.book" id="esi_book_03">
+            <field name="name">Harry Potter, III : Harry Potter et le prisonnier d'Azkaban</field>
+            <field name="cover_image" type="base64" file="esi_lecture/static/img/harryPotter3.jpg"/>
+            <field name="description">
+                <![CDATA[
+                    <h2>Quatrième de couverture</h2>
+                    <br>
+                    Sirius Black, le dangereux criminel qui s'est échappé de la forteresse d'Azkaban,
+                    recherche Harry Potter. C'est donc sous bonne garde que l'apprenti sorcier fait
+                    sa troisième rentrée.
+                    Au programme : des cours de divination, la fabrication d'une potion de ratatinage, le dressage des hippogriffes...
+                    Mais Harry est-il vraiment à l'abri du danger qui le menace ?
+                    Un livre époustouflant qui vous emportera dans un tourbillon de surprises et d'émotions.
+                 ]]>
+            </field>
+            <field name="date_created">2017-10-12</field>
+            <field name="pages">448</field>
+            <field name="authors" eval="[(4,ref('author_01'))]"/>
+        </record>
+
+        <record model="esi.book" id="esi_book_04">
+            <field name="name">Dune - Tome 1</field>
+            <field name="cover_image" type="base64" file="esi_lecture/static/img/dune1.jpg"/>
+            <field name="description">
+                <![CDATA[
+                    <h2>Biographie de l'auteur</h2>
+                <br>
+                Véritable légende dans l'univers de la SF, l'écrivain américain Frank Herbert (1920 - 1986)
+                est mondialement connu pour sa série Dune,
+                vendue à des millions d'exemplaires.
+                En France, ses œuvres majeures ont été publiées dans la collection " Ailleurs &amp; Demain ".
+                 ]]>
+            </field>
+            <field name="date_created">2020-10-01</field>
+            <field name="pages">838</field>
+            <field name="authors" eval="[(4,ref('author_02'))]"/>
+        </record>
+
+        <record id="product_template_coffret_potter" model="product.product">
+            <field name="name">Coffret Potter</field>
+            <field name="type">product</field>
+            <field name="categ_id"
+                   ref="product.product_category_5"/> <!-- Ajout de la catégorie "stockable" -->
+            <field name="list_price">25.0</field>
+            <field name="book_ids" eval="[(6, 0, [ref('esi_book_01'), ref('esi_book_02'), ref('esi_book_03')])]"/>
+            <field name="available_in_pos">True</field>
+            <field name="image_1920" type="base64" file="esi_lecture/static/img/harryPotterCollection.jpg"/>
+        </record>
+
+        <record id="product_template_coffret_dune" model="product.product">
+            <field name="name">Coffret Dune</field>
+            <field name="type">product</field>
+            <field name="categ_id"
+                   ref="product.product_category_5"/> <!-- Ajout de la catégorie "stockable" -->
+            <field name="list_price">13.0</field>
+            <field name="book_ids" eval="[(6, 0, [ref('esi_book_04')])]"/>
+            <field name="available_in_pos">True</field>
+            <field name="image_1920" type="base64" file="esi_lecture/static/img/dune1.jpg"/>
+        </record>
+
+
+        <!-- Données pour que le stock de livres soit rempli après l’installation du module-->
+        <!--  crée un nouvel inventaire de stock avec le nom "Inventaire des livres" -->
+        <record id="inventory_books" model="stock.inventory">
+            <field name="name">Inventaire des livres</field>
+        </record>
+
+        <!--crée une ligne d'inventaire associée à l'inventaire créé précédemment -->
+        <record id="stock_inventory_line_coffret_potter" model="stock.inventory.line">
+            <field name="product_id" ref="esi_lecture.product_template_coffret_potter"/>
+            <field name="product_uom_id" ref="uom.product_uom_unit"/>
+            <field name="inventory_id" ref="inventory_books"/>
+            <field name="product_qty">16.0</field>
+            <field name="location_id" model="stock.location" eval="obj().env.ref('stock.warehouse0').lot_stock_id.id"/>
+            <field name="partner_id" ref="provider_01"/>
+        </record>
+
+        <record id="stock_inventory_line_coffret_dune" model="stock.inventory.line">
+            <field name="product_id" ref="esi_lecture.product_template_coffret_dune"/>
+            <field name="product_uom_id" ref="uom.product_uom_unit"/>
+            <field name="inventory_id" ref="inventory_books"/>
+            <field name="product_qty">31.0</field>
+            <field name="location_id" model="stock.location" eval="obj().env.ref('stock.warehouse0').lot_stock_id.id"/>
+            <field name="partner_id" ref="provider_01"/>
+        </record>
+
+        <!-- démarrer l'inventaire lorsqu'il est à l'état "brouillon" -->
+        <function model="stock.inventory" name="_action_start">
+            <function eval="[[('state','=','draft'),('id', '=', ref('inventory_books'))]]"
+                      model="stock.inventory"
+                      name="search"/>
+        </function>
+
+        <!-- valider l'inventaire -->
+        <function model="stock.inventory" name="action_validate">
+            <function eval="[[('state','=','confirm'),('id', '=', ref('inventory_books'))]]"
+                      model="stock.inventory"
+                      name="search"/>
+        </function>
+    </data>
+</odoo>
