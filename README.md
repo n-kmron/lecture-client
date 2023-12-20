@@ -4,6 +4,14 @@
 
 **Gestion de librairies**
 
+## Utilisation du client Django
+
+Avant de lancer le serveur, il faut s'assurer que Docker et les images Odoo tournent
+
+Une fois le serveur lancé, on arrive sur une page pour se connecter au serveur Odoo. Si l'authentification est réussie, alors on est redirigé sur une page pour rechercher des livres par leur nom. Si des livres sont trouvés, une page affiche les résultats et on peut liker le livre que l'on veut.
+
+WARNING : le like fonctionne dans un seul sens sur le client Django (fonctionne correctement via Odoo). Si on unlike un livre, cela ne sera pas pris en compte par Django malheuresement
+
 ## Backend
 
 The goal is to develop a book sales module with the following functionalities:
