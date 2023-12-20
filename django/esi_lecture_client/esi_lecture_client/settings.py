@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     #our apps
-    'book_rating.apps.BookRatingConfig',
+    'book_rating',
     'odoo_config',
 ]
 

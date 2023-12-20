@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views.generic import ListView
 from django.conf import settings
+import time
 
 from .forms import UserForm
 from .models import User
@@ -25,7 +26,6 @@ def _write_info(login, username):
     with open(settings.BASE_DIR / '.env', 'w') as f:
         f.write(f"{login},{username}")
 
-
 def connect(request):
     form = UserForm(request.POST)
     # A Model Form won't be valid if a field is already in the DB (very annoying)
@@ -43,6 +43,7 @@ def connect(request):
                 _write_info(login, password)
                 messages.success(request, "Identification succeeded!")
             else:
+                _write_info(login, password)
                 messages.error(request, "Identification failed.")
         except ConnectionError:
             messages.error(request, "The 0doo server is not started!")
@@ -58,6 +59,8 @@ def connect(request):
                 if user:
                     messages.success(request, "Identification succeeded!")
                     _write_info(login, password)
+                    time.sleep(1)
+                    return HttpResponseRedirect(reverse('book_rating:books'))
             else:
                 messages.error(request, "Identification failed.")
         except ConnectionError:

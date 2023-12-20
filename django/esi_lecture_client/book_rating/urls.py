@@ -1,7 +1,12 @@
-from .views import HomeView
+from . import views
+from .views import BookView, home
 from django.urls import path
-application_name = "home"
+
+app_name = 'book_rating'
 
 urlpatterns = [
-    path('', HomeView.as_view(), name="home")
+    path('', home, name="home"),
+    path('books', BookView.as_view(), name="books"),
+    path('search', views.search, name="search"),
+    path('like', views.like, name="like_book")
 ]

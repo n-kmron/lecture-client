@@ -1,0 +1,45 @@
+{% extends "_base.html" %}
+{% load form_tags %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-lg p-4 mb-5 bg-white rounded">
+                    <div class="card-body">
+                        <h3 class="card-title text-center mb-4">Search a book</h3>
+                        <form action="{% url 'book_rating:search' %}" method="POST" autocomplete="off">
+                            {% csrf_token %}
+                            <div class="form-group mb-3">
+                                <label for="id_title">Title:</label>
+                                {{ bookForm.title|add_class:"form-control" }}
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Search</button>
+                        </form>
+                    </div>
+                </div>
+                {% if messages %}
+                    <div class="messages">
+                        {% for message in messages %}
+                            <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-danger{% else %}alert-info{% endif %} alert-dismissible fade show"
+                                 role="alert">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    const titleInput = document.getElementById('id_title');
+
+    if (titleInput) {
+        titleInput.classList.add('form-control');
+        titleInput.setAttribute('placeholder', 'Title')
+    }
+</script>
+{% endblock %}

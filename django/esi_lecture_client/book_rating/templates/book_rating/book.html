@@ -1,0 +1,42 @@
+{% extends "_base.html" %}
+
+{% block content %}
+    <div class="container my-5">
+        <div class="card bg-light text-dark p-4">
+            {% if books %}
+                <div class="card-header fs-2">Book(s) found!</div>
+                <div class="card-body">
+                    {% for book in books %}
+                        <div class="border-bottom mb-3">
+                            <h5 class="card-title">{{ book.name }}</h5>
+                            <p class="card-text">{{ book.description }}</p>
+                            <ul class="list-unstyled">
+                                <li class="mb-1"><strong>Likes:</strong> {{ book.likes_count }}</li>
+                                <li class="mb-1"><strong>Pages:</strong> {{ book.pages }}</li>
+                            </ul>
+                            <form method="post" action="{% url 'book_rating:like_book' %}" class="d-inline">
+                                {% csrf_token %}
+                                <input type="hidden" name="book_id" value="{{ book.id }}">
+                                <button type="submit" class="btn btn-primary btn-sm">Like</button>
+                            </form>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="card-text fs-5">
+                    No books found with this title.
+                </p>
+            {% endif %}
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-danger{% else %}alert-info{% endif %} alert-dismissible fade show"
+                             role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
