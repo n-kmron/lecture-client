@@ -60,13 +60,18 @@ def search(request):
 
 def like(request):
     book_id = request.POST.get('book_id')
+    book_title = request.POST.get('book_title')
+    context = {}
     try:
         login, username = _read_info()
         if login is not None and username is not None:
             uid = xml_rpc.connect(username, login)
             if xml_rpc.check_access_rights(uid, login):
-                test = xml_rpc.like(uid, login, book_id)
-                print(f"TEST: {test}")
+                xml_rpc.like(uid, login, book_id)
+                books = xml_rpc.search_book_by_name(uid, login, book_title)
+                context['books'] = books
+                messages.success(request, "Like added !")
+                return render(request, 'book_rating/book.html', context)
             else:
                 messages.error(request, "Request failed !")
     except ConnectionError:

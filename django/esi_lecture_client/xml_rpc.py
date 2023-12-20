@@ -38,7 +38,7 @@ def search_book_by_name(uid, password, book_name):
 
 def like(uid, password, book_id):
     try:
-        return MODELS.execute_kw(DB, uid, password, 'esi.book', 'like', [book_id])
+        return MODELS.execute_kw(DB, uid, password, 'esi.book', 'toggle_like_book', [book_id])
     except Exception as e:
         print(f"Erreur lors de la recherche du livre : {e}")
         return None
