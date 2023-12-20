@@ -1,9 +1,4 @@
 # ERPG5 - Project
-## Project Information
-
-**School:** École Supérieure d’Informatique  
-**Program:** Bachelor en Informatique  
-**Academic Year:** 2023 – 2024  
 
 ## ESI Lecture
 
@@ -19,7 +14,7 @@ The goal is to develop a book sales module with the following functionalities:
 
 ### Use of Web Service
 
-A RPC and python script is available at `api/script.py` to search books.
+A RPC and python script is available at `script_rpc/script.py` to search books.
 
 Details of the implementation of these calls are available in the [documentation](https://www.odoo.com/documentation/14.0/fr/developer/api/external_api.html).
 
@@ -41,3 +36,7 @@ This project comprises two applications:
 ## Authors
 > Mamoun El Benmassoud <br>
 > Cameron Noupoue
+
+## Credits 
+**School:** École Supérieure d’Informatique  
+**Academic Year:** 2023 – 2024
