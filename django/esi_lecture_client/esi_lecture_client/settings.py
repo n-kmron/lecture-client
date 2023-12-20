@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #our apps
     'book_rating.apps.BookRatingConfig',
+    'odoo_config',
 ]
 
 MIDDLEWARE = [
@@ -118,6 +119,11 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',  # Si vous avez un dossier static à la racine de votre projet
+    # BASE_DIR / 'odoo_config' / 'static',  # Pour un dossier static dans une application spécifique
+
+]
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
