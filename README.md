@@ -12,6 +12,13 @@ Une fois le serveur lancé, on arrive sur une page pour se connecter au serveur 
 
 WARNING : le like fonctionne dans un seul sens sur le client Django (fonctionne correctement via Odoo). Si on unlike un livre, cela ne sera pas pris en compte par Django malheuresement
 
+## Pistes d'amélioration
+
+Notre application est fonctionnelle et comporte tout ce qui a été demandé mais nous avons pu trouver des pistes d'améliorations que nous n'avons pas pu combler par manque de temps au vu des nombreux cours que nous avons dû remettre récemment
+
+* Odoo : gestion des erreurs, afficher des pop up, ... et gestion de la cohérence pour certaines choses
+* Django : la sécurité, routes accessibles, peu de vérifications, ...
+
 ## Backend
 
 The goal is to develop a book sales module with the following functionalities:
