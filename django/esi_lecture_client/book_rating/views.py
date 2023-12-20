@@ -48,7 +48,7 @@ def search(request):
             if login is not None and username is not None:
                 uid = xml_rpc.connect(username, login)
                 if xml_rpc.check_access_rights(uid, login):
-                    books = xml_rpc.search_book_by_name(uid, login, title)
+                    books = sortBooksByLikesAndName(xml_rpc.search_book_by_name(uid, login, title))
                     context['books'] = books
                     return render(request, 'book_rating/book.html', context)
                 else:
@@ -68,7 +68,7 @@ def like(request):
             uid = xml_rpc.connect(username, login)
             if xml_rpc.check_access_rights(uid, login):
                 xml_rpc.like(uid, login, book_id)
-                books = xml_rpc.search_book_by_name(uid, login, book_title)
+                books = sortBooksByLikesAndName(xml_rpc.search_book_by_name(uid, login, book_title))
                 context['books'] = books
                 messages.success(request, "Like added !")
                 return render(request, 'book_rating/book.html', context)
@@ -77,3 +77,7 @@ def like(request):
     except ConnectionError:
         messages.error(request, "The 0doo server is not started!")
     return HttpResponseRedirect(reverse('book_rating:books'))
+
+
+def sortBooksByLikesAndName(books):
+    return sorted(books, key=lambda book: (book['likes_count'], book['name']), reverse=True)

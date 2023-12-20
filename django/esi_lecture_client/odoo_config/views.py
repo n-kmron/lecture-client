@@ -3,8 +3,6 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views.generic import ListView
 from django.conf import settings
-import time
-
 from .forms import UserForm
 from .models import User
 
@@ -59,7 +57,6 @@ def connect(request):
                 if user:
                     messages.success(request, "Identification succeeded!")
                     _write_info(login, password)
-                    time.sleep(1)
                     return HttpResponseRedirect(reverse('book_rating:books'))
             else:
                 messages.error(request, "Identification failed.")
