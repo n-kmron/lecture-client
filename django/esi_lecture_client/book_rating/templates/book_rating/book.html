@@ -1,25 +1,79 @@
 {% extends "_base.html" %}
 
 {% block content %}
+    <a href="/books" class="btn btn-custom btn-sm d-flex align-items-center justify-content-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search me-2"
+             viewBox="0 0 16 16">
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.398 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.9-3.9a1.092 1.092 0 0 0-.065-.065zM13 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+        </svg>
+        Search other book
+    </a>
+
     <div class="container my-5">
         <div class="card bg-light text-dark p-4">
             {% if books %}
-                <div class="card-header fs-2">Book(s) found!</div>
-                <div class="card-body">
+                {% if books|length > 1 %}
+                    <div class="card-header fs-2">{{ books|length }} Books found!</div>
+                {% else %}
+                    <div class="card-header fs-2">{{ books|length }} Book found!</div>
+                {% endif %}
+                <div class="card-body py-5">
                     {% for book in books %}
-                        <div class="border-bottom mb-3">
-                            <h5 class="card-title">{{ book.name }}</h5>
-                            <p class="card-text">{{ book.description }}</p>
-                            <ul class="list-unstyled">
-                                <li class="mb-1"><strong>Likes:</strong> {{ book.likes_count }}</li>
-                                <li class="mb-1"><strong>Pages:</strong> {{ book.pages }}</li>
-                            </ul>
-                            <form method="post" action="{% url 'book_rating:like_book' %}" class="d-inline">
-                                {% csrf_token %}
-                                <input type="hidden" name="book_id" value="{{ book.id }}">
-                                <input type="hidden" name="book_title" value="{{ book.name }}">
-                                <button type="submit" class="btn btn-primary btn-sm">Like</button>
-                            </form>
+                        <div class="row border-bottom mb-3">
+                            <div class="col-md-4 d-flex align-items-center">
+                                <div class="image-container">
+                                    <img src="data:image/jpeg;base64,{{ book.cover_image }}" alt="Cover Image"
+                                         class="img-fluid book-cover">
+                                    <ul class="list-unstyled stats-list">
+                                        <li class="stat-item">
+                                            <i class="fas fa-calendar-alt stat-icon"></i>
+                                            <strong class="stat-label">Release Date:</strong>
+                                            <span class="stat-value">{{ book.date_created }}</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-8 spaceBetween">
+                                <div class="book-info">
+                                    <h5 class="card-title">{{ book.name }}</h5>
+                                    <p class="card-text">{{ book.description|safe }}</p>
+                                </div>
+                                <ul class="list-unstyled stats-list">
+                                    <li class="stat-item">
+                                        <i class="fas fa-thumbs-up stat-icon"></i>
+                                        <strong class="stat-label">Likes:</strong>
+                                        <span class="stat-value">{{ book.likes_count }}</span>
+                                        <div class="likes-tooltip">
+                                            <span>{{ book.liked_by_users_names }}</span>
+                                        </div>
+                                    </li>
+                                    <li class="stat-item">
+                                        <i class="fas fa-book stat-icon"></i>
+                                        <strong class="stat-label">Pages:</strong>
+                                        <span class="stat-value">{{ book.pages }}</span>
+                                    </li>
+                                    <li class="stat-item">
+                                        <i class="fas fa-user stat-icon"></i>
+                                        {% if book.authorsCount|length > 1 %}
+                                            <strong class="stat-label">Authors:</strong>
+                                        {% else %}
+                                            <strong class="stat-label">Author:</strong>
+                                        {% endif %}
+                                        <span class="stat-value">{{ book.authors }}</span>
+                                    </li>
+                                    {% for author in books.authors %}
+                                        <p>{{ author }}</p>
+                                    {% endfor %}
+                                </ul>
+                                <form method="post" action="{% url 'book_rating:like_book' %}" class="d-inline">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="book_id" value="{{ book.id }}">
+                                    <input type="hidden" name="book_title" value="{{ book.name }}">
+                                    <button type="submit" class="btn btn-like btn-sm">
+                                        <i class="fas fa-thumbs-up"></i> Like
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     {% endfor %}
                 </div>

@@ -13,6 +13,7 @@ from .models import Book
 def home(request):
     return redirect('odoo_config:index')
 
+
 class BookView(ListView):
     model = Book
     template_name = "book_rating/books.html"
@@ -49,6 +50,7 @@ def search(request):
                 uid = xml_rpc.connect(username, login)
                 if xml_rpc.check_access_rights(uid, login):
                     books = sortBooksByLikesAndName(xml_rpc.search_book_by_name(uid, login, title))
+                    _getInfo(uid, login, books)
                     context['books'] = books
                     return render(request, 'book_rating/book.html', context)
                 else:
@@ -69,6 +71,7 @@ def like(request):
             if xml_rpc.check_access_rights(uid, login):
                 xml_rpc.like(uid, login, book_id)
                 books = sortBooksByLikesAndName(xml_rpc.search_book_by_name(uid, login, book_title))
+                _getInfo(uid, login, books)
                 context['books'] = books
                 messages.success(request, "Like added !")
                 return render(request, 'book_rating/book.html', context)
@@ -77,6 +80,19 @@ def like(request):
     except ConnectionError:
         messages.error(request, "The 0doo server is not started!")
     return HttpResponseRedirect(reverse('book_rating:books'))
+
+
+def _getInfo(uid, login, books):
+    for book in books:
+        liked_by_users_ids = book.get('liked_by_users', [])
+        liked_by_users_names = xml_rpc.get_users_names_by_ids(uid, login, liked_by_users_ids)
+
+        authors_ids = book.get('authors', [])
+        authors = xml_rpc.get_partner_names_by_ids(uid, login, authors_ids)
+
+        book['liked_by_users_names'] = ', '.join(liked_by_users_names)
+        book['authors'] = ', '.join(authors)
+        book['authorsCount'] = authors
 
 
 def sortBooksByLikesAndName(books):

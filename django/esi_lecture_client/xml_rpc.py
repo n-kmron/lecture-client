@@ -42,3 +42,23 @@ def like(uid, password, book_id):
     except Exception as e:
         print(f"Erreur lors de la recherche du livre : {e}")
         return None
+
+
+def get_users_names_by_ids(uid, password, user_ids):
+    try:
+        users = MODELS.execute_kw(DB, uid, password, 'res.users', 'read', [user_ids], {'fields': ['name']})
+        return [user['name'] for user in users]
+    except Exception as e:
+        print(f"Error retrieving user names: {e}")
+        return []
+
+
+def get_partner_names_by_ids(uid, password, partner_ids):
+    try:
+        # Fetch the partner records based on their IDs
+        partners = MODELS.execute_kw(DB, uid, password, 'res.partner', 'read', [partner_ids], {'fields': ['name']})
+        # Extract and return the names from the records
+        return [partner['name'] for partner in partners]
+    except Exception as e:
+        print(f"Error retrieving partner names: {e}")
+        return []
