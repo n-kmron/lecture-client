@@ -20,9 +20,9 @@ class IndexView(ListView):
         return context
 
 
-def _write_info(login, username):
+def _write_info(login, password):
     with open(settings.BASE_DIR / '.env', 'w') as f:
-        f.write(f"{login},{username}")
+        f.write(f"{login},{password}")
 
 def connect(request):
     form = UserForm(request.POST)

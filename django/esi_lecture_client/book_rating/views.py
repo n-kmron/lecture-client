@@ -29,8 +29,8 @@ def _read_info():
     try:
         with open(settings.BASE_DIR / '.env', 'r') as f:
             content = f.read()
-            login, username = content.strip().split(',')
-            return login, username
+            login, password = content.strip().split(',')
+            return login, password
     except FileNotFoundError:
         # Gérer le cas où le fichier .env n'existe pas encore
         return None, None
@@ -45,16 +45,18 @@ def search(request):
     if form.is_valid():
         title = form.cleaned_data['title']
         try:
-            login, username = _read_info()
-            if login is not None and username is not None:
-                uid = xml_rpc.connect(username, login)
-                if xml_rpc.check_access_rights(uid, login):
-                    books = sortBooksByLikesAndName(xml_rpc.search_book_by_name(uid, login, title))
-                    _getInfo(uid, login, books)
+            login, password = _read_info()
+            if login is not None and password is not None:
+                uid = xml_rpc.connect(login, password)
+                if xml_rpc.check_access_rights(uid, password):
+                    books = sortBooksByLikesAndName(xml_rpc.search_book_by_name(uid, password, title))
+                    _getInfo(uid, password, books)
                     context['books'] = books
                     return render(request, 'book_rating/book.html', context)
                 else:
                     messages.error(request, "Please connect to Odoo !")
+            else:
+                messages.error(request, "Please connect to Odoo !")
         except ConnectionError:
             messages.error(request, "The 0doo server is not started!")
     return HttpResponseRedirect(reverse('book_rating:books'))
@@ -65,13 +67,13 @@ def like(request):
     book_title = request.POST.get('book_title')
     context = {}
     try:
-        login, username = _read_info()
-        if login is not None and username is not None:
-            uid = xml_rpc.connect(username, login)
-            if xml_rpc.check_access_rights(uid, login):
-                xml_rpc.like(uid, login, book_id)
-                books = sortBooksByLikesAndName(xml_rpc.search_book_by_name(uid, login, book_title))
-                _getInfo(uid, login, books)
+        login, password = _read_info()
+        if login is not None and password is not None:
+            uid = xml_rpc.connect(login, password)
+            if xml_rpc.check_access_rights(uid, password):
+                xml_rpc.like(uid, password, book_id)
+                books = sortBooksByLikesAndName(xml_rpc.search_book_by_name(uid, password, book_title))
+                _getInfo(uid, password, books)
                 context['books'] = books
                 messages.success(request, "Like added !")
                 return render(request, 'book_rating/book.html', context)
@@ -82,13 +84,13 @@ def like(request):
     return HttpResponseRedirect(reverse('book_rating:books'))
 
 
-def _getInfo(uid, login, books):
+def _getInfo(uid, password, books):
     for book in books:
         liked_by_users_ids = book.get('liked_by_users', [])
-        liked_by_users_names = xml_rpc.get_users_names_by_ids(uid, login, liked_by_users_ids)
+        liked_by_users_names = xml_rpc.get_users_names_by_ids(uid, password, liked_by_users_ids)
 
         authors_ids = book.get('authors', [])
-        authors = xml_rpc.get_partner_names_by_ids(uid, login, authors_ids)
+        authors = xml_rpc.get_partner_names_by_ids(uid, password, authors_ids)
 
         book['liked_by_users_names'] = ', '.join(liked_by_users_names)
         book['authors'] = ', '.join(authors)
