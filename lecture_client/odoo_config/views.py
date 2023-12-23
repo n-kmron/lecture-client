@@ -40,6 +40,7 @@ def connect(request):
                 )
                 _write_info(login, password)
                 messages.success(request, "Identification succeeded!")
+                return HttpResponseRedirect(reverse('book_rating:search'))
             else:
                 _write_info(login, password)
                 messages.error(request, "Identification failed.")
