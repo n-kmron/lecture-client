@@ -1,10 +1,6 @@
 # Author: Cameron Noupoué
 
-# Target to run the application
-run: stop
-	@# Check if Docker engine and daemon are running, if not, start them
-	@docker info > /dev/null 2>&1 || (echo "Starting Docker engine..." && open --background -a Docker)
-
+run: stop setup
 	docker start db odoo
 
 	@cd lecture_client && python3 manage.py makemigrations && python3 manage.py migrate
@@ -13,6 +9,10 @@ run: stop
 	@(cd lecture_client && python3 manage.py runserver) &
 	sleep 1
 	open http://127.0.0.1:8000/
+
+setup:
+	@# Check if Docker engine and daemon are running, if not, start them
+	@docker info > /dev/null 2>&1 || (echo "Starting Docker engine..." && open --background -a Docker && sleep 5)
 
 stop:
 	@pid=$$(lsof -ti :8000); \
