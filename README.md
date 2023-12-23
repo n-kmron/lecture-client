@@ -1,37 +1,27 @@
-# ERPG5 - Project
+# ESI Lecture
 
-## ESI Lecture
+ESI Lecture is a webapp designed and build with Odoo and Django to manage a book library
 
-**Gestion de librairies**
+## Prerequisites
 
-## Utilisation du client Django
+* Python3
+* Docker and an image of odoo and postgresql on the port 8069 and the name of the db has to be `dev01`
+* Load data must also be loaded
+  
+## Launch
 
-Avant de lancer le serveur, il faut s'assurer que Docker et les images Odoo tournent
-
-Une fois le serveur lancé, on arrive sur une page pour se connecter au serveur Odoo. Si l'authentification est réussie, alors on est redirigé sur une page pour rechercher des livres par leur nom. Si des livres sont trouvés, une page affiche les résultats et on peut liker le livre que l'on veut.
-
-WARNING : le like fonctionne dans un seul sens sur le client Django (fonctionne correctement via Odoo). Si on unlike un livre, cela ne sera pas pris en compte par Django malheuresement
-
-## Pistes d'amélioration
-
-Notre application est fonctionnelle et comporte tout ce qui a été demandé mais nous avons pu trouver des pistes d'améliorations que nous n'avons pas pu combler par manque de temps au vu des nombreux cours que nous avons dû remettre récemment
-
-* Odoo : gestion des erreurs, afficher des pop up, ... et gestion de la cohérence pour certaines choses
-* Django : la sécurité, routes accessibles, peu de vérifications, ...
+* Install our Odoo module in your instance
+* * execute `make` at the root of the repository
 
 ## Backend
 
-The goal is to develop a book sales module with the following functionalities:
-
+A backend is developed with Odoo 14 and serves to
 - Consult/add/delete/modify the list of books.
 - View authors of books and rank them by the number of registered books.
 - Allow users to like a book.
+- Buy books
+- Manage books' stock
 
-### Use of Web Service
-
-A RPC and python script is available at `script_rpc/script.py` to search books.
-
-Details of the implementation of these calls are available in the [documentation](https://www.odoo.com/documentation/14.0/fr/developer/api/external_api.html).
 
 ### Integration with Existing Modules
 
@@ -49,8 +39,8 @@ This project comprises two applications:
 2. Book rating application.
 
 ## Authors
-> Mamoun El Benmassoud <br>
-> Cameron Noupoue
+* Cameron Noupoue
+* Mamoun El Benmassoud
 
 ## Credits 
 **School:** École Supérieure d’Informatique  
